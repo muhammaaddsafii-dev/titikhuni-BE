@@ -138,6 +138,8 @@ class LandController extends Controller
                     'extreme_weather' => 1,
                     'drought' => 1,
                     'liquefaction' => 1,
+                    'earthquake' => 1,
+                    'flashflood' => 1,
                 ],
                 'distribution' => ['low' => 6, 'medium' => 0, 'high' => 0]
             ]);
@@ -153,6 +155,8 @@ class LandController extends Controller
             'extreme_weather' => 'extremeweather',
             'drought' => 'drought',
             'liquefaction' => 'liquefaction',
+            'earthquake' => 'earthquake',
+            'flashflood' => 'flashflood',
         ];
 
         // Imported hazard shapefiles were never reprojected/labeled consistently:
@@ -166,6 +170,8 @@ class LandController extends Controller
             'liquefaction' => 32749,
             'eruption' => 3857,
             'extreme_weather' => 3857,
+            'earthquake' => 3857,
+            'flashflood' => 32749,
         ];
 
         $risks = [];
@@ -177,7 +183,7 @@ class LandController extends Controller
                 LIMIT 1
             ", ['lng' => $lng, 'lat' => $lat]);
 
-            $risks[$key] = $result ? (int) $result->gridcode : 1;
+            $risks[$key] = $result ? max(1, (int) $result->gridcode) : 1;
         }
 
         $lowCount = 0;

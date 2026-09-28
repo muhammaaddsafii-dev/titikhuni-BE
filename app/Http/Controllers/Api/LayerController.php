@@ -21,6 +21,8 @@ class LayerController extends Controller
         'eruption' => 'eruption',
         'liquefaction' => 'liquefaction',
         'extreme_weather' => 'extremeweather',
+        'earthquake' => 'earthquake',
+        'flashflood' => 'flashflood',
     ];
 
     // Imported hazard shapefiles were never reprojected/labeled consistently:
@@ -35,6 +37,9 @@ class LayerController extends Controller
         'liquefaction' => 32749,
         'eruption' => 3857,
         'extreme_weather' => 3857,
+        // earthquake is also Web Mercator (mislabeled 4326); flashflood is UTM 49S.
+        'earthquake' => 3857,
+        'flashflood' => 32749,
     ];
 
     // drought, liquefaction and extreme_weather are dense hazard/weather GRIDS
@@ -46,7 +51,7 @@ class LayerController extends Controller
     // of tiny polygons into ~3 features per layer. That union is too slow
     // (~7s) to run inside a live request, so it's precomputed offline by
     // `php artisan layers:warm` and just read from cache here.
-    public const HEAVY_TYPES = ['drought', 'liquefaction', 'extreme_weather'];
+    public const HEAVY_TYPES = ['drought', 'liquefaction', 'extreme_weather', 'earthquake'];
 
     // Simplify tolerance for HEAVY_TYPES, in METERS (native projected units of
     // the raw geom column) — applied before transforming to lat/lng, since
