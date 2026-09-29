@@ -141,7 +141,7 @@ class LandController extends Controller
                     'earthquake' => 1,
                     'flashflood' => 1,
                 ],
-                'distribution' => ['low' => 6, 'medium' => 0, 'high' => 0]
+                'distribution' => ['low' => 8, 'medium' => 0, 'high' => 0]
             ]);
         }
 
